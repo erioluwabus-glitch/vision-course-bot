@@ -13,6 +13,9 @@ scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/au
 import json
 import os
 creds = ServiceAccountCredentials.from_json_keyfile_dict(json.loads(os.environ.get('GOOGLE_CREDENTIALS')), scope)
+import logging
+logging.basicConfig(level=logging.INFO)
+logging.info("Credentials loaded successfully")
 client = gspread.authorize(creds)
 assignment_sheet = client.open("VisionCourseSupport").worksheet("Assignments")
 wins_sheet = client.open("VisionCourseSupport").worksheet("Wins")
@@ -130,6 +133,7 @@ def main():
     application.add_handler(MessageHandler(filters.TEXT | filters.VIDEO | filters.PHOTO | filters.Document.ALL, handle_submission))
     application.add_error_handler(error_handler)
     application.run_polling()
+logging.info("Sheet updated for command: %s", update.message.text)
 
 if __name__ == "__main__":
     main()
