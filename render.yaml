@@ -1,0 +1,8 @@
+services:
+- type: worker
+  name: vision-course-bot
+  env: python
+  buildCommand: pip install -r requirements.txt
+  startCommand: python bot.py
+  envVars:
+  - fromGroup: vision-course-bot-env
