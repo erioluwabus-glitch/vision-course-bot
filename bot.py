@@ -10,7 +10,9 @@ ADMIN_ID = 7109534825
 
 # Google Sheets setup
 scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
-creds = ServiceAccountCredentials.from_json_keyfile_name("credentials.json", scope)
+import json
+import os
+creds = ServiceAccountCredentials.from_json_keyfile_dict(json.loads(os.environ.get('GOOGLE_CREDENTIALS')), scope)
 client = gspread.authorize(creds)
 assignment_sheet = client.open("VisionCourseSupport").worksheet("Assignments")
 wins_sheet = client.open("VisionCourseSupport").worksheet("Wins")
